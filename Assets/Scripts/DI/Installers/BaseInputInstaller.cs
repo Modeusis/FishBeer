@@ -11,6 +11,8 @@ namespace DI.Installers
             _input = new BaseInput();
             
             Container.Bind<BaseInput>().FromInstance(_input).AsSingle().NonLazy();
+            
+            _input.Enable();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Numerics;
+using System.Linq;
+using UnityEngine;
 using Utilities.EventBus;
 using Utilities.FSM;
 
@@ -15,6 +16,8 @@ namespace Player.Camera.CameraStates
         
         private CameraSetup _currentCamera;
         
+        private StateType _lastCalledState;
+        
         public CameraStandardState(StateType stateType, List<CameraSetup> availableCameras, CameraSetup currentCamera, EventBus eventBus, BaseInput input)
         {
             StateType = stateType;
@@ -27,18 +30,16 @@ namespace Player.Camera.CameraStates
             _cameras = availableCameras;
             
             _currentCamera = currentCamera;
-            
-            
         }
 
         public override void Enter()
         {
-            
+            Debug.Log("Enter idle state");
         }
         
         public override void Update()
         {
-            if (_input.gameplay.Move.WasPerformedThisFrame())
+            if (_input.gameplay.Move.WasPressedThisFrame())
             {
                 HandleMove(_input.gameplay.Move.ReadValue<Vector2>());
             }
@@ -51,30 +52,21 @@ namespace Player.Camera.CameraStates
 
         private void HandleMove(Vector2 input)
         {
-            switch (input.X, input.Y)
+            Debug.Log("HandleMove input " + input);
+            
+            for (int i = 0; i < _currentCamera.AvailablePositionsChanges.Count; i++)
             {
-                case (0, 1):
-                    _eventBus.Publish(CameraPosition.Forward);
-                    break;
-                case (0, -1):
-                    _eventBus.Publish(CameraPosition.Down);
-                    break;
-                case (1, 0):
-                    _eventBus.Publish(CameraPosition.Left);
-                    break;
-                case (-1, 0):
-                    _eventBus.Publish(CameraPosition.Neutral);
-                    break;
+                if (input == _currentCamera.AvailablePositionsChanges[i].CameraVector)
+                {
+                    HandleCameraChange(_currentCamera.AvailablePositionsChanges[i].PositionType);
+                    
+                    return;
+                }
             }
         }
         
         private void HandleCameraChange(CameraPosition position)
         {
-            if (!_currentCamera.AvailablePositionsChanges.Contains(position))
-            {
-                return;
-            }
-
             var newCamera = _cameras.Find(camera => camera.CameraPosition == position);
             
             if (newCamera == null)
@@ -83,6 +75,16 @@ namespace Player.Camera.CameraStates
             }
             
             _currentCamera = newCamera;
+            
+            _currentCamera.Activate();
+
+            var inactiveCameras = _cameras
+                .Where(cam => cam.CameraPosition != _currentCamera.CameraPosition);
+            
+            foreach (var camera in inactiveCameras)
+            {
+                camera.Deactivate();
+            }
         }
     }
 }
