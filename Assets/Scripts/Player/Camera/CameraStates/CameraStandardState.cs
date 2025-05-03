@@ -52,8 +52,6 @@ namespace Player.Camera.CameraStates
 
         private void HandleMove(Vector2 input)
         {
-            Debug.Log("HandleMove input " + input);
-            
             for (int i = 0; i < _currentCamera.AvailablePositionsChanges.Count; i++)
             {
                 if (input == _currentCamera.AvailablePositionsChanges[i].CameraVector)
