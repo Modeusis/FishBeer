@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameProcess.Interactions;
 using Player.Camera.CameraStates;
 using UnityEngine;
 using Utilities.EventBus;
@@ -35,13 +36,15 @@ namespace Player.Camera
             var states = new Dictionary<StateType, State>()
             {
                 { StateType.Idle, new CameraStandardState(StateType.Idle, cameras, _currentCamera, _eventBus, _input)},
-                { StateType.Blocked, new CameraBlockedState(StateType.Blocked) }
+                { StateType.Blocked, new CameraBlockedState(StateType.Blocked) },
+                { StateType.MiniGame, new CameraMiniGameState(StateType.MiniGame) }
             };
 
             var transitions = new List<Transition>()
             {
-                new Transition(StateType.Idle, StateType.Blocked, () => _eventBus.WasCalledThisFrame<CameraBlocker>()),
-                new Transition(StateType.Blocked, StateType.Idle, () => _input.gameplay.Break.WasPerformedThisFrame()),
+                new Transition(StateType.Idle, StateType.Blocked, () => _eventBus.WasCalledThisFrame<InteractionType>()),
+                new Transition(StateType.MiniGame, StateType.Idle, () => _input.gameplay.Break.WasPerformedThisFrame()),
+                new Transition(StateType.Blocked, StateType.Idle, () => _eventBus.WasCalledThisFrame<CameraUnblocker>()),
             };
             
             _cameraStateMachine = new FSM(states, transitions, StateType.Idle);

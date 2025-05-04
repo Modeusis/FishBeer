@@ -110,7 +110,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Reflection_Strenght: 0.01
+    - _Reflection_Strenght: 0.0065
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -118,7 +118,7 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _TextureScale: 2
-    - _WaterDepth: 10
+    - _WaterDepth: 10.26
     - _WaterSpeed: 0.05
     - _WorkflowMode: 1
     - _ZWrite: 1

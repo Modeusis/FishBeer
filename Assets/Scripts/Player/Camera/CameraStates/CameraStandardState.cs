@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using GameProcess.Interactions;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Utilities.EventBus;
 using Utilities.FSM;
 
@@ -16,7 +18,9 @@ namespace Player.Camera.CameraStates
         
         private CameraSetup _currentCamera;
         
-        private StateType _lastCalledState;
+        private IInteractable _lastCalledInteractable;
+        
+        private UnityEngine.Camera _mainCamera;
         
         public CameraStandardState(StateType stateType, List<CameraSetup> availableCameras, CameraSetup currentCamera, EventBus eventBus, BaseInput input)
         {
@@ -30,11 +34,13 @@ namespace Player.Camera.CameraStates
             _cameras = availableCameras;
             
             _currentCamera = currentCamera;
+            
+            _mainCamera = UnityEngine.Camera.main;
         }
 
         public override void Enter()
         {
-            Debug.Log("Enter idle state");
+            Debug.Log("Entered standard state");
         }
         
         public override void Update()
@@ -43,11 +49,14 @@ namespace Player.Camera.CameraStates
             {
                 HandleMove(_input.gameplay.Move.ReadValue<Vector2>());
             }
+            
+            HandleRaycast();
+            HandleInteraction();
         }
         
         public override void Exit()
         {
-            
+            _lastCalledInteractable = null;
         }
 
         private void HandleMove(Vector2 input)
@@ -83,6 +92,39 @@ namespace Player.Camera.CameraStates
             {
                 camera.Deactivate();
             }
+        }
+
+        private void HandleRaycast()
+        {
+            Ray ray = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            
+            if (!Physics.Raycast(ray, out RaycastHit hit))
+                return;
+
+            if (!hit.collider.TryGetComponent(out IInteractable interactable))
+            {
+                _lastCalledInteractable?.Unfocus();
+                
+                _lastCalledInteractable = null;
+                
+                return;
+            }
+
+            if (_lastCalledInteractable != null)
+                return;
+            
+            _lastCalledInteractable = interactable;
+                
+            _lastCalledInteractable?.Focus();
+
+        }
+        
+        private void HandleInteraction()
+        {
+            if (!_input.gameplay.Click.WasPressedThisFrame())
+                return;
+            
+            _lastCalledInteractable?.Interact();
         }
     }
 }

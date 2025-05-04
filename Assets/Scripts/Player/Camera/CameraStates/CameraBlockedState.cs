@@ -1,3 +1,4 @@
+using UnityEngine;
 using Utilities.FSM;
 
 namespace Player.Camera.CameraStates
@@ -11,7 +12,7 @@ namespace Player.Camera.CameraStates
         
         public override void Enter()
         {
-            
+            Debug.Log("Entered blocked state");
         }
 
         public override void Update()
