@@ -2,6 +2,7 @@ using System;
 using Animations;
 using Player.Camera;
 using Player.FishStorage;
+using UI.Cursor;
 using UnityEngine;
 using Utilities.EventBus;
 using Zenject;
@@ -27,6 +28,8 @@ namespace GameProcess.Interactions
             
             _fishStorage.EatFish();
             
+            _eventBus.Publish(CursorType.Idle);
+            
             gameObject.layer = LayerMask.NameToLayer("Default");
             
             _handler.StartEating();
@@ -36,12 +39,16 @@ namespace GameProcess.Interactions
         {
             gameObject.layer = LayerMask.NameToLayer("Interactable");
             
+            _eventBus.Publish(CursorType.Click);
+            
             _handler.Focus();
         }
 
         public void Unfocus()
         {
             gameObject.layer = LayerMask.NameToLayer("Default");
+            
+            _eventBus.Publish(CursorType.Idle);
             
             _handler.Unfocus();
         }

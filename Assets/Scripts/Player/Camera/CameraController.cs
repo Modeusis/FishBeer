@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using GameProcess.Interactions;
+using GameProcess.MiniGame;
 using Player.Camera.CameraStates;
+using Player.FishStorage;
 using UnityEngine;
 using Utilities.EventBus;
 using Utilities.FSM;
@@ -19,6 +21,9 @@ namespace Player.Camera
         [SerializeField] private List<CameraSetup> cameras;
         
         [SerializeField] private CameraPosition startingPosition;
+        
+        [SerializeField] private MiniGameSetup miniGameVariants;
+        [SerializeField] private FishSetup availableFishes;
         
         private CameraSetup _currentCamera;
 

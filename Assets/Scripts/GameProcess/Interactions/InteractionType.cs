@@ -4,7 +4,9 @@
     {
         Eating,
         Drinking,
-        Shopping,
-        Fishing
+        BeerShopping,
+        FishBaitShopping,
+        Fishing,
+        FishSaling
     }
 }

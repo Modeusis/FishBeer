@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Animations;
 using Player;
 using Player.Camera;
+using UI.Cursor;
 using UnityEngine;
 using Utilities.EventBus;
 using Zenject;
@@ -49,6 +50,8 @@ namespace GameProcess.Interactions
             
             _animationHandle.StartDrinking();
             
+            _eventBus.Publish(CursorType.Idle);
+            
             _eventBus.Publish(InteractionType.Drinking);
         }
 
@@ -56,12 +59,16 @@ namespace GameProcess.Interactions
         {
             ToggleChildFocus(true);
             
+            _eventBus.Publish(CursorType.Click);
+            
             _animationHandle.Focus();
         }
 
         public void Unfocus()
         {
             ToggleChildFocus(false);
+            
+            _eventBus.Publish(CursorType.Idle);
             
             _animationHandle.Unfocus();
         }

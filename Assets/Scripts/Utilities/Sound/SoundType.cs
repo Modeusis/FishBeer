@@ -8,7 +8,10 @@ namespace Sounds
         Gulp = 3,
         Burp = 4,
         Bite = 5,
-        FishFocus,
-        BottleFocus,
+        FishFocus = 6,
+        BottleFocus = 7,
+        ButtonClick = 8,
+        ButtonHover = 9,
+        SliderToggle = 10
     }
 }

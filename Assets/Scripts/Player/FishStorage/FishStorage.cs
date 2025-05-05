@@ -15,6 +15,8 @@ namespace Player.FishStorage
         
         public FishStorage(FishCountView view)
         {
+            _fishes = new List<Fish>();
+            
             _fishCountView = view;
         }
         

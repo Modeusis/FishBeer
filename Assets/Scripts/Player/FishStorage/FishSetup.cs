@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Player.FishStorage
 {
     [CreateAssetMenu(menuName = "Setups/Fish Setup")]
-    public class FishSetups : ScriptableObject
+    public class FishSetup : ScriptableObject
     {
         [SerializeField] private List<Fish> availableFishes;
         
