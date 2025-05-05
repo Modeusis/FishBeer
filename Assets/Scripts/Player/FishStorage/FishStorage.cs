@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Zenject;
 
 namespace Player.FishStorage
 {
-    public class FishStorage
+    public class FishStorage : IDisposable
     {
         [Inject] private ResourceManager _resourceManager;
         
@@ -11,17 +12,17 @@ namespace Player.FishStorage
 
         private int GetFishAmount() => _fishes.Count;
         
-        private void AddFish(Fish fish)
+        public void AddFish(Fish fish)
         {
             _fishes.Add(fish);
         }
 
-        private void EatFish()
+        public void EatFish()
         {
-            _fishes.Remove(_fishes[0]);
+            // _fishes.Remove(_fishes[0]);
         }
         
-        private void SellFishes()
+        public void SellFishes()
         {
             if (GetFishAmount() == 0)
                 return;
@@ -34,6 +35,11 @@ namespace Player.FishStorage
             }
             
             _resourceManager.AddMoney(total);
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }

@@ -6,6 +6,9 @@ namespace Sounds
         CanOpen = 1,
         BottleBreak = 2,
         Gulp = 3,
-        Burp = 4
+        Burp = 4,
+        Bite = 5,
+        FishFocus,
+        BottleFocus,
     }
 }
