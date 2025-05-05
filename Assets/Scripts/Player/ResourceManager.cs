@@ -1,17 +1,58 @@
-﻿using UnityEngine;
+﻿using UI.ResourceCounters;
+using UnityEngine;
 
 namespace Player
 {
     public class ResourceManager
     {
-        public int FishBaits { get; private set; }
+        private readonly MoneyView _moneyView;
+        private readonly FishBaitsView _fishBaitsView;
+        private readonly BeerView _beerView;
         
-        public int Beer { get; private set; }
-        
-        public float Money { get; private set; }
+        private int _fishBaits;
+        private int _beer;
+        private float _money;
 
-        public ResourceManager(int fishBaits, int beer, float money)
+        public int FishBaits
         {
+            get => _fishBaits;
+            private set
+            {
+                _fishBaits = value;
+                
+                _fishBaitsView.UpdateFishBaits(_fishBaits);
+            }
+        }
+
+        public int Beer
+        {
+            get => _beer;
+            private set
+            {
+                _beer = value;
+                
+                _beerView.UpdateBeer(_beer);
+            }
+        }
+
+        public float Money
+        {
+            get => _money;
+            private set
+            {
+                _money = value;
+                
+                _moneyView.UpdateMoney(_money);
+            }
+        }
+
+        public ResourceManager(int fishBaits, int beer, float money,
+            MoneyView moneyView, FishBaitsView fishBaitsView, BeerView beerView)
+        {
+            _moneyView = moneyView;
+            _fishBaitsView = fishBaitsView;
+            _beerView = beerView;
+            
             FishBaits = fishBaits;
             Beer = beer;
             Money = money;

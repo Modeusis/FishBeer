@@ -1,4 +1,6 @@
 using Player.FishStorage;
+using UI.ResourceCounters;
+using UnityEngine;
 using Zenject;
 
 namespace DI.Installers
@@ -7,9 +9,11 @@ namespace DI.Installers
     {
         private FishStorage _fishStorage;
 
+        [SerializeField] private FishCountView fishCountView;
+        
         public override void InstallBindings()
         {
-            _fishStorage = new FishStorage();
+            _fishStorage = new FishStorage(fishCountView);
             
             Container.Bind<FishStorage>().FromInstance(_fishStorage).AsSingle().NonLazy();
         }
