@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Animations;
 using Player;
 using Player.Camera;
@@ -21,11 +22,20 @@ namespace GameProcess.Interactions
         
         private CameraUnblocker _cameraUnblocker;
 
+        private List<Transform> _bottleChilds;
+        
         private void Start()
         {
             _animationHandle = GetComponent<DrinkableBottleAnimationHandle>();
             
             _cameraUnblocker = new CameraUnblocker();
+            
+            _bottleChilds = new List<Transform>();
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                _bottleChilds.Add(transform.GetChild(i));
+            }
         }
 
         public void Interact()
@@ -35,6 +45,8 @@ namespace GameProcess.Interactions
             
             _isDrinking = true;
             
+            ToggleChildFocus(false);
+            
             _animationHandle.StartDrinking();
             
             _eventBus.Publish(InteractionType.Drinking);
@@ -42,12 +54,16 @@ namespace GameProcess.Interactions
 
         public void Focus()
         {
-            Debug.Log("DrinkableBeerBottle in focus");
+            ToggleChildFocus(true);
+            
+            _animationHandle.Focus();
         }
 
         public void Unfocus()
         {
-            Debug.Log("DrinkableBeerBottle unfocused");
+            ToggleChildFocus(false);
+            
+            _animationHandle.Unfocus();
         }
 
         private bool ValidateInteraction()
@@ -67,6 +83,14 @@ namespace GameProcess.Interactions
             _eventBus.Publish(_cameraUnblocker);
             
             Destroy(gameObject);
+        }
+
+        private void ToggleChildFocus(bool focus)
+        {
+            foreach (var child in _bottleChilds)
+            {
+                child.gameObject.layer = focus ? LayerMask.NameToLayer("Interactable") : LayerMask.NameToLayer("Default");
+            }
         }
     }
 }

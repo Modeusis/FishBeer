@@ -1,4 +1,6 @@
-﻿using Sounds;
+﻿using System;
+using DG.Tweening;
+using Sounds;
 using UnityEngine;
 using UnityEngine.Events;
 using Zenject;
@@ -9,8 +11,10 @@ namespace Animations
     {
         [Inject] private SoundService _soundService;
         
+        [Header("Sounds")]
         [SerializeField] private float soundRadius = 5f;
         
+        [Header("Drink animations")]
         [SerializeField] private Animator _bottleAnimator;
         [SerializeField] private Animator _canAnimator;
         
@@ -39,6 +43,16 @@ namespace Animations
             _soundService.Play2DSfx(SoundType.BottleBreak, 1f);
             
             onDrink?.Invoke();
+        }
+
+        public void Focus()
+        {
+            _bottleAnimator.SetBool("Focused", true);
+        }
+        
+        public void Unfocus()
+        {
+            _bottleAnimator.SetBool("Focused", false);
         }
     }
 }
