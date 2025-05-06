@@ -8,12 +8,12 @@ namespace UI.Pages
 {
     public class Page : MonoBehaviour
     {
-        public void Open()
+        protected void Open()
         {
             gameObject.SetActive(true);
         }
         
-        public void Close()
+        protected void Close()
         {
             gameObject.SetActive(false);
         }
