@@ -1,4 +1,5 @@
-﻿using GameProcess.MiniGame;
+﻿using System.Collections.Generic;
+using GameProcess.MiniGame;
 using Player.FishStorage;
 using UnityEngine;
 using Zenject;
@@ -12,24 +13,45 @@ namespace GameProcess.Interactions
 
         [SerializeField] private MiniGameSetup miniGames;
         [SerializeField] private FishSetup fishSetup;
+
+        [SerializeField] private Transform firstFishingRodElement;
+        [SerializeField] private Transform secondFishingRodElement;
         
         private Transform _cameraTransform;
         
+        private List<Transform> _rodChilds;
+
+        private void Awake()
+        {
+            _rodChilds = new List<Transform>();
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                _rodChilds.Add(transform.GetChild(i));
+            }
+        }
+        
         public void Interact()
         {
-            Debug.Log("Interacted with rod");
+            ToggleChildFocus(false);
         }
 
         public void Focus()
         {
-            gameObject.layer = LayerMask.NameToLayer("Interactable");
+            ToggleChildFocus(true);
         }
 
         public void Unfocus()
         {
-            gameObject.layer = LayerMask.NameToLayer("Default");
+            ToggleChildFocus(false);
         }
         
-        
+        private void ToggleChildFocus(bool focus)
+        {
+            foreach (var child in _rodChilds)
+            {
+                child.gameObject.layer = focus ? LayerMask.NameToLayer("Interactable") : LayerMask.NameToLayer("Default");
+            }
+        }
     }
 }

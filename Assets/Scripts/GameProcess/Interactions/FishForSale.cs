@@ -10,7 +10,6 @@ namespace GameProcess.Interactions
         
         [SerializeField] private Animator animator;
         
-        
         public void Interact()
         {
             animator.gameObject.layer = LayerMask.NameToLayer("Default");
