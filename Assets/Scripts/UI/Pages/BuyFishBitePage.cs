@@ -18,7 +18,8 @@ namespace UI.Pages
 
         private BaseInput _input;
         
-        [Header("Pricing")] [SerializeField] private float oneFishBaitPrice = 8f;
+        [Header("Pricing")]
+        [SerializeField] private float oneFishBaitPrice = 8f;
 
         [Header("Page components")]
         [SerializeField] private Button confirmButton;
@@ -100,6 +101,7 @@ namespace UI.Pages
             if (CurrentPrice >= oneFishBaitPrice)
             {
                 _resourceManager.SpendMoney(CurrentPrice);
+                _resourceManager.AddFishBaits(Mathf.CeilToInt(priceSlider.value));
             }
             
             ClosePage();
@@ -116,6 +118,8 @@ namespace UI.Pages
 
         private void CalculateCurrentPrice(float value)
         {
+            quantityText.text = "x" + value;
+            
             CurrentPrice = value * oneFishBaitPrice;
         }
     }

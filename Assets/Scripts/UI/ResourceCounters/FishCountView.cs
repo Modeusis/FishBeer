@@ -4,10 +4,8 @@ using UnityEngine;
 namespace UI.ResourceCounters
 {
     [RequireComponent(typeof(TMP_Text))]
-    public class FishCountView : MonoBehaviour
+    public class FishCountView : BaseResourceCounter
     {
-        private TMP_Text _fieldText;
-        
         public void UpdateFishAmount(int fishCount)
         {
             if (_fieldText == null)

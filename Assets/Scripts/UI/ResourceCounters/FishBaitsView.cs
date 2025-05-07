@@ -1,13 +1,12 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
 namespace UI.ResourceCounters
 {
     [RequireComponent(typeof(TMP_Text))]
-    public class FishBaitsView : MonoBehaviour
+    public class FishBaitsView : BaseResourceCounter
     {
-        [SerializeField] private TMP_Text _fieldText;
-
         public void UpdateFishBaits(int baits)
         {
             if (_fieldText == null)
@@ -16,6 +15,13 @@ namespace UI.ResourceCounters
             }
             
             _fieldText.text = $"x{baits}";
+            
+            _sequence?.Kill();
+            
+            _sequence = DOTween.Sequence();
+            
+            _sequence.Append(transform.DOScale(scaleOnChange, duration / 2));
+            _sequence.Append(transform.DOScale(1, duration / 2));
         }
     }
 }

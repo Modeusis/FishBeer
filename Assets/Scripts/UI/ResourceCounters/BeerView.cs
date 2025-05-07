@@ -4,10 +4,8 @@ using UnityEngine;
 namespace UI.ResourceCounters
 {
     [RequireComponent(typeof(TMP_Text))]
-    public class BeerView : MonoBehaviour
+    public class BeerView : BaseResourceCounter
     {
-        private TMP_Text _fieldText;
-
         public void UpdateBeer(int beerCount)
         {
             if (_fieldText == null)

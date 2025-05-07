@@ -4,10 +4,8 @@ using UnityEngine;
 namespace UI.ResourceCounters
 {
     [RequireComponent(typeof(TMP_Text))]
-    public class MoneyView : MonoBehaviour
+    public class MoneyView : BaseResourceCounter
     {
-        private TMP_Text _fieldText;
-
         public void UpdateMoney(float money)
         {
             if (_fieldText == null)
