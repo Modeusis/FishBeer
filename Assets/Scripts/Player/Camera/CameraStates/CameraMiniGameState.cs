@@ -13,7 +13,7 @@ namespace Player.Camera.CameraStates
         
         public override void Enter()
         {
-            Debug.Log("Entered minigame state");
+            
         }
 
         public override void Update()

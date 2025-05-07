@@ -60,6 +60,8 @@ namespace UI.Pages
             confirmButton.onClick.AddListener(HandleConfirm);
             closeButton.onClick.AddListener(ClosePage);
             priceSlider.onValueChanged.AddListener(CalculateCurrentPrice);
+            
+            priceSlider.value = 0;
         }
 
         private void Update()

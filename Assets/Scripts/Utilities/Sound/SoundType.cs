@@ -12,6 +12,8 @@ namespace Sounds
         BottleFocus = 7,
         ButtonClick = 8,
         ButtonHover = 9,
-        SliderToggle = 10
+        SliderToggle = 10,
+        SaleBottleFocus = 11,
+        FishBiteSaleFocus = 12,
     }
 }

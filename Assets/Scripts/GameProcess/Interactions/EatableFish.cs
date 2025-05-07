@@ -4,6 +4,7 @@ using Player.Camera;
 using Player.FishStorage;
 using UI.Cursor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utilities.EventBus;
 using Zenject;
 
@@ -14,37 +15,46 @@ namespace GameProcess.Interactions
         [Inject] private FishStorage _fishStorage;
         [Inject] private EventBus _eventBus;
 
-        [SerializeField] private EatableFishAnimationHandler _handler;
+        public EatableFishAnimationHandler animationHandler;
 
         public void Interact()
         {
+            if (animationHandler == null)
+                return;
+            
             _eventBus.Publish(InteractionType.Eating);
             
             _fishStorage.EatFish();
             
             _eventBus.Publish(CursorType.Idle);
             
-            _handler.gameObject.layer = LayerMask.NameToLayer("Default");
+            animationHandler.gameObject.layer = LayerMask.NameToLayer("Default");
             
-            _handler.StartEating();
+            animationHandler.StartEating();
         }
 
         public void Focus()
         {
-            _handler.gameObject.layer = LayerMask.NameToLayer("Interactable");
+            if (animationHandler == null)
+                return;
+            
+            animationHandler.gameObject.layer = LayerMask.NameToLayer("Interactable");
             
             _eventBus.Publish(CursorType.Click);
             
-            _handler.Focus();
+            animationHandler.Focus();
         }
 
         public void Unfocus()
         {
-            _handler.gameObject.layer = LayerMask.NameToLayer("Default");
+            if (animationHandler == null)
+                return;
+            
+            animationHandler.gameObject.layer = LayerMask.NameToLayer("Default");
             
             _eventBus.Publish(CursorType.Idle);
             
-            _handler.Unfocus();
+            animationHandler.Unfocus();
         }
 
         public void HandleFinishEating()

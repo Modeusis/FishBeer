@@ -8,7 +8,7 @@ namespace Animations
 {
     public class EatableFishAnimationHandler : MonoBehaviour
     {
-        [Inject] private SoundService _soundService;
+        private SoundService _soundService;
 
         [SerializeField] private Animator _fishAnimator;
 
@@ -19,6 +19,11 @@ namespace Animations
             _fishAnimator.SetBool("Eating", true);
         }
 
+        public void SetupEatableFish(SoundService soundService)
+        {
+            _soundService = soundService;
+        }
+        
         public void Focus()
         {
             _fishAnimator.SetBool("Focused", true);

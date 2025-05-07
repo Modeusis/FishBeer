@@ -40,7 +40,7 @@ namespace Player.Camera.CameraStates
 
         public override void Enter()
         {
-            Debug.Log("Entered standard state");
+            
         }
         
         public override void Update()
@@ -110,6 +110,13 @@ namespace Player.Camera.CameraStates
                 return;
             }
 
+            if (_lastCalledInteractable != interactable)
+            {
+                _lastCalledInteractable?.Unfocus();
+
+                _lastCalledInteractable = null;
+            }
+            
             if (_lastCalledInteractable != null)
                 return;
             

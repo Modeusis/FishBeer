@@ -1,27 +1,27 @@
 ﻿using System.Collections.Generic;
-using UI.Pages;
+using Sounds;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Utilities.EventBus;
 using Zenject;
 
 namespace GameProcess.Interactions
 {
-    public class FishBucket : MonoBehaviour, IInteractable
+    public class BeerForSale : MonoBehaviour, IInteractable
     {
         [Inject] private EventBus _eventBus;
+        [Inject] private SoundService _soundService;
         
         [SerializeField] private Animator animator;
-
-        private List<Transform> _fishBucketChilds;
         
-        private void Awake()
+        private List<Transform> _bottleChilds;
+        
+        private void Start()
         {
-            _fishBucketChilds = new List<Transform>();
-            
+            _bottleChilds = new List<Transform>();
+
             for (int i = 0; i < animator.transform.childCount; i++)
             {
-                _fishBucketChilds.Add(animator.transform.GetChild(i));
+                _bottleChilds.Add(animator.transform.GetChild(i));
             }
         }
         
@@ -29,9 +29,11 @@ namespace GameProcess.Interactions
         {
             ToggleChildFocus(false);
             
+            OnInteract();
+            
             animator.SetBool("Focused", false);
             
-            _eventBus.Publish(InteractionType.FishSaling);
+            _eventBus.Publish(InteractionType.BeerShopping);
         }
 
         public void Focus()
@@ -47,10 +49,15 @@ namespace GameProcess.Interactions
             
             animator.SetBool("Focused", false);
         }
+
+        private void OnInteract()
+        {
+            _soundService.Play3DSfx(SoundType.SaleBottleFocus, animator.transform, 5f, 1f);
+        }
         
         private void ToggleChildFocus(bool focus)
         {
-            foreach (var child in _fishBucketChilds)
+            foreach (var child in _bottleChilds)
             {
                 child.gameObject.layer = focus ? LayerMask.NameToLayer("Interactable") : LayerMask.NameToLayer("Default");
             }

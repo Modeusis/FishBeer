@@ -19,16 +19,14 @@ namespace GameProcess.Interactions
 
         private bool _isDrinking;
         
-        [SerializeField] private DrinkableBottleAnimationHandle animationHandle;
+        public DrinkableBottleAnimationHandle animationHandle;
         
-        private CameraUnblocker _cameraUnblocker;
+        private CameraUnblocker _cameraUnblocker = new CameraUnblocker();
 
         private List<Transform> _bottleChilds;
         
-        private void Start()
+        public void OnSpawnBottle()
         {
-            _cameraUnblocker = new CameraUnblocker();
-            
             _bottleChilds = new List<Transform>();
 
             for (int i = 0; i < animationHandle.transform.childCount; i++)
@@ -39,6 +37,9 @@ namespace GameProcess.Interactions
 
         public void Interact()
         {
+            if (animationHandle == null)
+                return;
+            
             if (!ValidateInteraction())
                 return;
             
@@ -55,6 +56,9 @@ namespace GameProcess.Interactions
 
         public void Focus()
         {
+            if (animationHandle == null)
+                return;
+            
             ToggleChildFocus(true);
             
             _eventBus.Publish(CursorType.Click);
@@ -64,6 +68,9 @@ namespace GameProcess.Interactions
 
         public void Unfocus()
         {
+            if (animationHandle == null)
+                return;
+            
             ToggleChildFocus(false);
             
             _eventBus.Publish(CursorType.Idle);
@@ -87,7 +94,7 @@ namespace GameProcess.Interactions
             
             _eventBus.Publish(_cameraUnblocker);
             
-            Destroy(gameObject);
+            Destroy(animationHandle.gameObject);
         }
 
         private void ToggleChildFocus(bool focus)

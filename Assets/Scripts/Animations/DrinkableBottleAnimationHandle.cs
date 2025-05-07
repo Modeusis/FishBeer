@@ -9,7 +9,7 @@ namespace Animations
 {
     public class DrinkableBottleAnimationHandle : MonoBehaviour
     {
-        [Inject] private SoundService _soundService;
+        private SoundService _soundService;
         
         [Header("Sounds")]
         [SerializeField] private float soundRadius = 5f;
@@ -23,6 +23,11 @@ namespace Animations
         public void StartDrinking()
         {
             _bottleAnimator?.SetBool("Drinking", true);
+        }
+
+        public void SetupDrinkableBottle(SoundService soundService)
+        {
+            _soundService = soundService;
         }
         
         public void CanOpen()

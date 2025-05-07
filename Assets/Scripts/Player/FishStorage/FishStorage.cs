@@ -20,7 +20,7 @@ namespace Player.FishStorage
             _fishCountView = view;
         }
         
-        private int GetFishesAmount() => _fishes.Count;
+        public int GetFishesAmount() => _fishes.Count;
         
         public void AddFish(Fish fish)
         {
