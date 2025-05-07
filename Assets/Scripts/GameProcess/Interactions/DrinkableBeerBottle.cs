@@ -6,12 +6,12 @@ using Player;
 using Player.Camera;
 using UI.Cursor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utilities.EventBus;
 using Zenject;
 
 namespace GameProcess.Interactions
 {
-    [RequireComponent(typeof(DrinkableBottleAnimationHandle))]
     public class DrinkableBeerBottle : MonoBehaviour, IInteractable
     {
         [Inject] private EventBus _eventBus;
@@ -19,7 +19,7 @@ namespace GameProcess.Interactions
 
         private bool _isDrinking;
         
-        private DrinkableBottleAnimationHandle _animationHandle;
+        [SerializeField] private DrinkableBottleAnimationHandle animationHandle;
         
         private CameraUnblocker _cameraUnblocker;
 
@@ -27,15 +27,13 @@ namespace GameProcess.Interactions
         
         private void Start()
         {
-            _animationHandle = GetComponent<DrinkableBottleAnimationHandle>();
-            
             _cameraUnblocker = new CameraUnblocker();
             
             _bottleChilds = new List<Transform>();
 
-            for (int i = 0; i < transform.childCount; i++)
+            for (int i = 0; i < animationHandle.transform.childCount; i++)
             {
-                _bottleChilds.Add(transform.GetChild(i));
+                _bottleChilds.Add(animationHandle.transform.GetChild(i));
             }
         }
 
@@ -48,7 +46,7 @@ namespace GameProcess.Interactions
             
             ToggleChildFocus(false);
             
-            _animationHandle.StartDrinking();
+            animationHandle.StartDrinking();
             
             _eventBus.Publish(CursorType.Idle);
             
@@ -61,7 +59,7 @@ namespace GameProcess.Interactions
             
             _eventBus.Publish(CursorType.Click);
             
-            _animationHandle.Focus();
+            animationHandle.Focus();
         }
 
         public void Unfocus()
@@ -70,7 +68,7 @@ namespace GameProcess.Interactions
             
             _eventBus.Publish(CursorType.Idle);
             
-            _animationHandle.Unfocus();
+            animationHandle.Unfocus();
         }
 
         private bool ValidateInteraction()

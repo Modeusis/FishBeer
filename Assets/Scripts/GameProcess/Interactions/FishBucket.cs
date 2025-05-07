@@ -1,29 +1,27 @@
 ﻿using System.Collections.Generic;
 using UI.Pages;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utilities.EventBus;
 using Zenject;
 
 namespace GameProcess.Interactions
 {
-    [RequireComponent(typeof(Animator))]
     public class FishBucket : MonoBehaviour, IInteractable
     {
         [Inject] private EventBus _eventBus;
         
-        private Animator _animator;
+        [SerializeField] private Animator animator;
 
         private List<Transform> _fishBucketChilds;
         
         private void Awake()
         {
-            _animator = GetComponent<Animator>();
-            
             _fishBucketChilds = new List<Transform>();
             
-            for (int i = 0; i < transform.childCount; i++)
+            for (int i = 0; i < animator.transform.childCount; i++)
             {
-                _fishBucketChilds.Add(transform.GetChild(i));
+                _fishBucketChilds.Add(animator.transform.GetChild(i));
             }
         }
         
@@ -31,7 +29,7 @@ namespace GameProcess.Interactions
         {
             ToggleChildFocus(false);
             
-            _animator.SetBool("Focused", false);
+            animator.SetBool("Focused", false);
             
             _eventBus.Publish(InteractionType.FishBaitShopping);
         }
@@ -40,14 +38,14 @@ namespace GameProcess.Interactions
         {
             ToggleChildFocus(true);
             
-            _animator.SetBool("Focused", true);
+            animator.SetBool("Focused", true);
         }
 
         public void Unfocus()
         {
             ToggleChildFocus(false);
             
-            _animator.SetBool("Focused", false);
+            animator.SetBool("Focused", false);
         }
         
         private void ToggleChildFocus(bool focus)
