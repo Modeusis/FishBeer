@@ -22,7 +22,10 @@ namespace Player.Camera.CameraStates
         
         private UnityEngine.Camera _mainCamera;
         
-        public CameraStandardState(StateType stateType, List<CameraSetup> availableCameras, CameraSetup currentCamera, EventBus eventBus, BaseInput input)
+        private float _raycastDistance;
+        
+        public CameraStandardState(StateType stateType, List<CameraSetup> availableCameras, CameraSetup currentCamera,
+            EventBus eventBus, BaseInput input, float raycastDistance)
         {
             StateType = stateType;
             
@@ -36,6 +39,8 @@ namespace Player.Camera.CameraStates
             _currentCamera = currentCamera;
             
             _mainCamera = UnityEngine.Camera.main;
+            
+            _raycastDistance = raycastDistance;
         }
 
         public override void Enter()
@@ -97,9 +102,16 @@ namespace Player.Camera.CameraStates
         private void HandleRaycast()
         {
             Ray ray = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
-            
-            if (!Physics.Raycast(ray, out RaycastHit hit))
+
+            if (!Physics.Raycast(ray, out RaycastHit hit, _raycastDistance))
+            {
+                _lastCalledInteractable?.Unfocus();
+                
+                _lastCalledInteractable = null;
+                
                 return;
+            }
+                
 
             if (!hit.collider.TryGetComponent(out IInteractable interactable))
             {

@@ -9291,8 +9291,7 @@ MonoBehaviour:
     - <PositionType>k__BackingField: 0
       <CameraVector>k__BackingField: {x: 1, y: 0}
   startingPosition: 0
-  miniGameVariants: {fileID: 0}
-  availableFishes: {fileID: 11400000, guid: 9c079b65359b6d546a1e4274476a1cd0, type: 2}
+  raycastDistance: 10
 --- !u!1 &1740697962
 GameObject:
   m_ObjectHideFlags: 0

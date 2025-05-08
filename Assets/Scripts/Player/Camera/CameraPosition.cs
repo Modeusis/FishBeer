@@ -6,5 +6,6 @@
         Forward = 1,
         Down = 2,
         Left = 3,
+        Fishing = 4
     }
 }

@@ -29,7 +29,8 @@ namespace Utilities.FSM
         {
             for (int i = 0; i < _transitions.Count; i++)
             {
-                if (_transitions[i].From == _currentState.StateType && _transitions[i].Condition())
+                if ((_transitions[i].From == _currentState.StateType || 
+                     (_transitions[i].From == StateType.Any && _currentState.StateType != _transitions[i].To)) && _transitions[i].Condition())
                 {
                     ChangeState(_transitions[i].To);
                 }

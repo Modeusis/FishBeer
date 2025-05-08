@@ -24,14 +24,21 @@ namespace GameProcess.Interactions
         private List<Transform> _rodChilds;
 
         private Sequence _sequence;
+        private Sequence _subSequence;
         
         private Vector3 _startPosition;
         private Vector3 _startRotation;
+        
+        private Vector3 _startFirstPartPosition;
+        private Vector3 _startSecondPartPosition;
         
         private void Awake()
         {
             _startPosition = fishRodTransform.localPosition;
             _startRotation = fishRodTransform.localRotation.eulerAngles;
+            
+            _startFirstPartPosition = firstFishingRodElement.localPosition;
+            _startSecondPartPosition = secondFishingRodElement.localPosition;
             
             _rodChilds = new List<Transform>();
 
@@ -81,11 +88,15 @@ namespace GameProcess.Interactions
 
         private void FocusAnimation()
         {
+            Debug.Log("focus rod");
+            
             fishRodTransform?.DOKill();
             _sequence?.Kill();
+            _subSequence?.Kill();
             
             _sequence = DOTween.Sequence();
-
+            _subSequence = DOTween.Sequence();
+            
             _sequence.Append(fishRodTransform.DOLocalMove(new Vector3(11.743f, 9.72799969f, 8.55599976f), focusDuration / 2));
             _sequence.Append(fishRodTransform.DOLocalMove(new Vector3(11.7919998f, 9.96899986f, 8.21500015f),
                 focusDuration / 2));
@@ -93,6 +104,7 @@ namespace GameProcess.Interactions
             _sequence.OnComplete(() =>
             {
                 fishRodTransform.DOLocalRotate(new Vector3(309.829834f,318.94632f,206.364349f), focusDuration / 3);
+                
                 fishRodTransform.DOLocalMove(new Vector3(10.8649998f,9.84700012f,8.18500042f), focusDuration / 3)
                     .SetDelay(focusDuration / 3)
                     .SetEase(Ease.Linear);
@@ -101,16 +113,26 @@ namespace GameProcess.Interactions
                     .SetEase(Ease.Linear);
             });
 
+            _subSequence.Append(firstFishingRodElement.DOLocalMoveZ(_startFirstPartPosition.z + 0.01f, focusDuration / 2));
+            _subSequence.Append(secondFishingRodElement.DOLocalMoveZ(_startSecondPartPosition.z + 0.01f, focusDuration / 2));
+            
             _sequence.SetEase(Ease.Flash);
+            _subSequence.SetEase(Ease.Flash);
         }
 
         private void UnfocusAnimation()
         {
+            Debug.Log("Unfocus rod");
+            
             fishRodTransform?.DOKill();
             _sequence?.Kill();
+            _subSequence?.Kill();
 
             fishRodTransform.DOLocalMove(_startPosition, focusDuration);
             fishRodTransform.DOLocalRotate(_startRotation, focusDuration);
+
+            firstFishingRodElement.DOLocalMoveZ(_startFirstPartPosition.z, focusDuration);
+            secondFishingRodElement.DOLocalMoveZ(_startSecondPartPosition.z, focusDuration);
         }
     }
 }

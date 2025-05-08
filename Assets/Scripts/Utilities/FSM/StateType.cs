@@ -4,6 +4,9 @@
     {
         Idle = 0,
         Blocked = 1,
-        MiniGame = 2
+        Toggled = 2,
+        Active = 3,
+        Finished = 4,
+        Any = 5
     }
 }

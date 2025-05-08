@@ -1,12 +1,10 @@
-﻿using UnityEngine;
-using Utilities.FSM;
+﻿using Utilities.FSM;
 
-namespace Player.Camera.CameraStates
+namespace GameProcess.MiniGame.MiniGameStates
 {
-    public class CameraMiniGameState : State
+    public class ActiveFishingState : State
     {
-        
-        public CameraMiniGameState(StateType stateType)
+        public ActiveFishingState(StateType stateType)
         {
             StateType = stateType;
         }
