@@ -2279,6 +2279,7 @@ Transform:
   - {fileID: 5573496088350080586}
   - {fileID: 9057429046701063181}
   - {fileID: 369205494310505790}
+  - {fileID: 2023474859}
   m_Father: {fileID: 615324261}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330585543
@@ -10507,6 +10508,78 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2020239078}
   m_CullTransparentMesh: 1
+--- !u!1 &2023474858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2023474859}
+  - component: {fileID: 2023474861}
+  - component: {fileID: 2023474860}
+  m_Layer: 0
+  m_Name: FishRodInteractor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2023474859
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023474858}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.935, y: 10.08, z: 9.418}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 322989140}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2023474860
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023474858}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.385179, y: 2.5508761, z: 1}
+  m_Center: {x: 0.08858609, y: 0.42871976, z: 0}
+--- !u!114 &2023474861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2023474858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2567a2fe04f94a9582aea366bce95bbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  miniGames: {fileID: 0}
+  fishSetup: {fileID: 0}
+  fishRodTransform: {fileID: 369205494310505790}
+  firstFishingRodElement: {fileID: 7284145870320529066}
+  secondFishingRodElement: {fileID: 7953565550788481481}
+  focusDuration: 0.5
 --- !u!4 &2062585006 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7630121246003406160, guid: e7308ddb3aa3fd54a92dc2e93fa72682, type: 3}
