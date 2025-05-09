@@ -33,6 +33,8 @@ namespace Utilities.FSM
                      (_transitions[i].From == StateType.Any && _currentState.StateType != _transitions[i].To)) && _transitions[i].Condition())
                 {
                     ChangeState(_transitions[i].To);
+                    
+                    return;
                 }
             }
         }

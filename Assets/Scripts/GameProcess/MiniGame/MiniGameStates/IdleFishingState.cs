@@ -1,4 +1,5 @@
-﻿using Utilities.FSM;
+﻿using UnityEngine;
+using Utilities.FSM;
 
 namespace GameProcess.MiniGame.MiniGameStates
 {
@@ -11,7 +12,7 @@ namespace GameProcess.MiniGame.MiniGameStates
         
         public override void Enter()
         {
-            
+            Debug.Log("IdleFishingState Enter");
         }
 
         public override void Update()

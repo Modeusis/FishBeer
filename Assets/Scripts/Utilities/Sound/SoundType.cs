@@ -15,5 +15,8 @@ namespace Sounds
         SliderToggle = 10,
         SaleBottleFocus = 11,
         FishBiteSaleFocus = 12,
+        FishRodFocus = 13,
+        FishRodUnpack = 14,
+        FishRodPack = 14,
     }
 }
