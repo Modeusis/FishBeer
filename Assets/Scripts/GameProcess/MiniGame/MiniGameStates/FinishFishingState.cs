@@ -1,5 +1,7 @@
 ﻿using DG.Tweening;
+using GameProcess.MiniGame.StateUiScreens;
 using Player.FishStorage;
+using Sounds;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,45 +14,40 @@ namespace GameProcess.MiniGame.MiniGameStates
     {
         private readonly EventBus _eventBus;
         
-        private readonly CanvasGroup _finishFishingScreen;
-        private readonly float _toggleDuration;
+        private readonly FishingFinishScreen _fishingFinishScreen;
         
-        private readonly Transform _fishViewTransform;
+        private readonly SoundService _soundService;
         
-        private readonly TMP_Text _fishNameTextField;
-        
-        private readonly Button _leaveButton;
-        private readonly Button _restartMiniGameButton;
+        private readonly FishingRodAnimationHandler _fishingRodAnimation;
         
         private Fish _pulledFish;
         
         private GameObject _fishViewInstance;
         
-        public FinishFishingState(StateType stateType, EventBus eventBus, TMP_Text fishName, Button leaveButton,
-            Button restartMiniGameButton, CanvasGroup fishViewCanvasGroup, float toggleDuration, Transform fishViewTransform)
+        public FinishFishingState(StateType stateType, EventBus eventBus, SoundService soundService, FishingFinishScreen finishScreen)
         {
             StateType = stateType;
             
             _eventBus = eventBus;
             _eventBus.Subscribe<Fish>(HandleSuccessFishing);
+
+            _soundService = soundService;
             
-            _finishFishingScreen = fishViewCanvasGroup;
-            _toggleDuration = toggleDuration;
+            _fishingFinishScreen = finishScreen;
             
-            _fishViewTransform = fishViewTransform;
+            _fishingFinishScreen.LeaveButton.onClick.AddListener(LeaveFishing);
+            _fishingFinishScreen.RestartMiniGameButton.onClick.AddListener(ContinueFishing);
             
-            _fishNameTextField = fishName;
             
-            _leaveButton = leaveButton;
-            _restartMiniGameButton = restartMiniGameButton;
-            
-            _leaveButton.onClick.AddListener(LeaveFishing);
-            _restartMiniGameButton.onClick.AddListener(ContinueFishing);
         }
         
         public override void Enter()
         {
             ToggleFinishScreen(true);
+            
+            _soundService.Play2DSfx(SoundType.Glorious, 1f);
+            
+            RotateFishView();
         }
 
         public override void Update()
@@ -61,6 +58,8 @@ namespace GameProcess.MiniGame.MiniGameStates
         public override void Exit()
         {
             ToggleFinishScreen(false);
+            
+            _fishingFinishScreen.FishViewTransform.DOKill();
         }
 
         private void LeaveFishing()
@@ -77,6 +76,8 @@ namespace GameProcess.MiniGame.MiniGameStates
         {
             if (_fishViewInstance != null)
             {
+                _fishViewInstance.transform.DOKill();
+                
                 Object.Destroy(_fishViewInstance);
                 
                 _fishViewInstance = null;
@@ -84,23 +85,23 @@ namespace GameProcess.MiniGame.MiniGameStates
             
             _pulledFish = fish;
             
-            _fishNameTextField.text = fish.Name;
+            _fishingFinishScreen.FishNameTextField.text = fish.Name;
             
             _fishViewInstance = Object.Instantiate(_pulledFish.FishPrefab);
             
-            _fishViewInstance.transform.position = _fishViewTransform.position;
-            _fishViewInstance.transform.rotation = _fishViewTransform.rotation;
+            _fishViewInstance.transform.position = _fishingFinishScreen.FishViewTransform.position;
+            _fishViewInstance.transform.rotation = _fishingFinishScreen.FishViewTransform.rotation;
             
-            _fishViewTransform.gameObject.layer = LayerMask.NameToLayer("Overlay");
+            _fishingFinishScreen.FishViewTransform.gameObject.layer = LayerMask.NameToLayer("Overlay");
         }
 
         private void ToggleFinishScreen(bool isActive)
         {
-            _finishFishingScreen.DOKill();
+            _fishingFinishScreen.FinishFishingScreen.DOKill();
             
-            _finishFishingScreen.interactable = isActive;
+            _fishingFinishScreen.FinishFishingScreen.interactable = isActive;
             
-            _finishFishingScreen.DOFade(isActive ? 1f : 0f, _toggleDuration);
+            _fishingFinishScreen.FinishFishingScreen.DOFade(isActive ? 1f : 0f, _fishingFinishScreen.ToggleDuration);
         }
 
         private void RotateFishView()
@@ -108,11 +109,14 @@ namespace GameProcess.MiniGame.MiniGameStates
             if (_fishViewInstance == null)
                 return;
             
-            var rotateVector = _fishViewTransform.rotation.eulerAngles;
+            Debug.Log("Test");
             
             _fishViewInstance.transform.DOKill();
             
-            _fishViewInstance.transform.DOLocalRotate(new Vector3(0f, _fishViewTransform.localEulerAngles.y, 0f), _toggleDuration);
+            _fishViewInstance.transform.DOLocalRotate(new Vector3(0, 360f, 45f), _fishingFinishScreen.SpinDuration,
+                    RotateMode.FastBeyond360)
+                .SetEase(Ease.Linear)
+                .SetLoops(-1, LoopType.Restart);
         }
     }
 }

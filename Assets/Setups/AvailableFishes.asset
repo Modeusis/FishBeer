@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   availableFishes:
   - <Name>k__BackingField: "\u042F\u0437\u044C"
-    <Price>k__BackingField: 20
-    <FishPrefab>k__BackingField: {fileID: 0}
+    <Price>k__BackingField: 12
+    <FishPrefab>k__BackingField: {fileID: 3843058508759265962, guid: 745f3768485fe6f41b70151ebde90085, type: 3}
     <Difficulty>k__BackingField: 0
   - <Name>k__BackingField: "\u041A\u0430\u0440\u0430\u0441\u044C"
-    <Price>k__BackingField: 40
-    <FishPrefab>k__BackingField: {fileID: 0}
-    <Difficulty>k__BackingField: 0
+    <Price>k__BackingField: 18
+    <FishPrefab>k__BackingField: {fileID: 8594005292488461600, guid: 853a3cdcf3ed12545a13d24bedf96d1b, type: 3}
+    <Difficulty>k__BackingField: 1
   - <Name>k__BackingField: "\u0429\u0443\u043A\u0430"
-    <Price>k__BackingField: 80
-    <FishPrefab>k__BackingField: {fileID: 0}
-    <Difficulty>k__BackingField: 0
+    <Price>k__BackingField: 22
+    <FishPrefab>k__BackingField: {fileID: 5211325562464078948, guid: 4326007c15bfbc54ea5fd1a3a3013507, type: 3}
+    <Difficulty>k__BackingField: 2

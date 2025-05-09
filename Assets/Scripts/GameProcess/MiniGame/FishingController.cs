@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using GameProcess.Interactions;
 using GameProcess.MiniGame.MiniGameStates;
+using GameProcess.MiniGame.StateUiScreens;
 using Player.Camera;
 using Player.FishStorage;
+using Sounds;
 using UnityEngine;
 using Utilities.EventBus;
 using Utilities.FSM;
@@ -15,12 +17,19 @@ namespace GameProcess.MiniGame
         private EventBus _eventBus;
         
         private BaseInput _input;
-
+        
+        private SoundService _soundService;
+        
         [SerializeField] private FishSetup fishSetup;
         
         [SerializeField] private MiniGameSetup miniGameSetup;
         
         [SerializeField] private FishingRodAnimationHandler fishingRod;
+        
+        [Header("State UI screens")]
+        [SerializeField] private ToggledFishingScreen toggledFishingScreen;
+        [SerializeField] private FishingActiveScreen activeFishingScreen;
+        [SerializeField] private FishingFinishScreen fishingFinishScreen; 
         
         private FSM _fishingStateMachine;
         
@@ -29,9 +38,11 @@ namespace GameProcess.MiniGame
         private CameraUnblocker _cameraUnblocker;
         
         [Inject]
-        private void Initialize(EventBus eventBus, BaseInput input)
+        private void Initialize(EventBus eventBus, BaseInput input, SoundService soundService)
         {
             _input = input;
+            
+            _soundService = soundService;
             
             _eventBus = eventBus;
             _eventBus.Subscribe<InteractionType>(HandleMiniGameCall);
@@ -51,10 +62,10 @@ namespace GameProcess.MiniGame
 
             var states = new Dictionary<StateType, State>()
             {
-                { StateType.Idle, new IdleFishingState(StateType.Idle) },
-                { StateType.Toggled, new ToggledFishingState(StateType.Toggled, _eventBus) },
-                { StateType.Active, new ActiveFishingState(StateType.Active) },
-                { StateType.Finished, new IdleFishingState(StateType.Finished) },
+                { StateType.Idle, new IdleFishingState(StateType.Idle, fishingRod) },
+                { StateType.Toggled, new ToggledFishingState(StateType.Toggled, _eventBus, _input, toggledFishingScreen, fishingRod) },
+                { StateType.Active, new ActiveFishingState(StateType.Active, _eventBus, _input, miniGameSetup, fishingRod, activeFishingScreen, fishSetup) },
+                { StateType.Finished, new FinishFishingState(StateType.Finished, _eventBus, _soundService,fishingFinishScreen) },
             };
             
             _fishingStateMachine = new FSM(states, transitions, StateType.Idle);

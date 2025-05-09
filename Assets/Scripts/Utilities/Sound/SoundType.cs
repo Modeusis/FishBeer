@@ -18,5 +18,6 @@ namespace Sounds
         FishRodFocus = 13,
         FishRodUnpack = 14,
         FishRodPack = 14,
+        Glorious = 15,
     }
 }
