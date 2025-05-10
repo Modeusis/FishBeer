@@ -37,8 +37,6 @@ namespace GameProcess.MiniGame.MiniGameStates
             
             _fishingFinishScreen.LeaveButton.onClick.AddListener(LeaveFishing);
             _fishingFinishScreen.RestartMiniGameButton.onClick.AddListener(ContinueFishing);
-            
-            
         }
         
         public override void Enter()

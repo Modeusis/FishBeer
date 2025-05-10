@@ -13,9 +13,18 @@ MonoBehaviour:
   m_Name: MiniGameSetup
   m_EditorClassIdentifier: 
   miniGames:
-  - <MiniGameTypeDifficulties>k__BackingField: 2
+  - <Difficulty>k__BackingField: 2
     <MiniGameChance>k__BackingField: 0.2
-  - <MiniGameTypeDifficulties>k__BackingField: 1
+    <GameDuration>k__BackingField: 1
+    <ZoneWidth>k__BackingField: 40
+    <PercentageBounds>k__BackingField: {x: 0.3, y: 0.6}
+  - <Difficulty>k__BackingField: 1
     <MiniGameChance>k__BackingField: 0.4
-  - <MiniGameTypeDifficulties>k__BackingField: 0
+    <GameDuration>k__BackingField: 2
+    <ZoneWidth>k__BackingField: 80
+    <PercentageBounds>k__BackingField: {x: 0.3, y: 0.6}
+  - <Difficulty>k__BackingField: 0
     <MiniGameChance>k__BackingField: 1
+    <GameDuration>k__BackingField: 4
+    <ZoneWidth>k__BackingField: 100
+    <PercentageBounds>k__BackingField: {x: 0.3, y: 0.6}

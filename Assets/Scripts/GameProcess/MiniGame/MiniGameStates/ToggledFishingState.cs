@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using GameProcess.MiniGame.StateUiScreens;
+using Player;
 using Player.Camera;
 using Sounds;
 using UnityEngine;
@@ -14,6 +15,8 @@ namespace GameProcess.MiniGame.MiniGameStates
         
         private readonly BaseInput _input;
         
+        private readonly ResourceManager _resourceManager;
+        
         private readonly ToggledFishingScreen _toggledFishingScreen;
         
         private readonly SoundService _soundService;
@@ -21,13 +24,15 @@ namespace GameProcess.MiniGame.MiniGameStates
         private readonly FishingRodAnimationHandler _fishingRodAnimation;
         
         public ToggledFishingState(StateType stateType, EventBus eventBus, BaseInput input,
-            ToggledFishingScreen toggleFishingScreen , FishingRodAnimationHandler fishingRodAnimation)
+            ToggledFishingScreen toggleFishingScreen , FishingRodAnimationHandler fishingRodAnimation, ResourceManager resourceManager)
         {
             StateType = stateType;
             
             _input = input;
             
             _eventBus = eventBus;
+            
+            _resourceManager = resourceManager;
             
             _toggledFishingScreen = toggleFishingScreen;
             _toggledFishingScreen.ScreenCanvasGroup.interactable = false;
@@ -37,8 +42,6 @@ namespace GameProcess.MiniGame.MiniGameStates
         
         public override void Enter()
         {
-            Debug.Log($"ToggledFishingState Enter");
-
             _toggledFishingScreen.ScreenCanvasGroup.DOKill();
             _toggledFishingScreen.ScreenCanvasGroup.DOFade(1f, _toggledFishingScreen.UiTransitionDuration);
             
@@ -49,8 +52,10 @@ namespace GameProcess.MiniGame.MiniGameStates
 
         public override void Update()
         {
-            if (_input.gameplay.Interact.WasPressedThisFrame())
+            if (_input.gameplay.Interact.WasPressedThisFrame() && _resourceManager.FishBaits > 0)
             {
+                _resourceManager.SpendFishBait();
+                
                 _eventBus.Publish(MiniGameStep.Active);
             }
         }

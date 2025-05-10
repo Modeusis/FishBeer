@@ -1,4 +1,7 @@
-﻿using GameProcess.MiniGame.StateUiScreens;
+﻿using System.Linq;
+using System.Resources;
+using DG.Tweening;
+using GameProcess.MiniGame.StateUiScreens;
 using Player.FishStorage;
 using UnityEngine;
 using Utilities.EventBus;
@@ -12,6 +15,8 @@ namespace GameProcess.MiniGame.MiniGameStates
         
         private readonly BaseInput _input;
         
+        private readonly FishStorage _fishStorage;
+        
         private readonly MiniGameSetup _miniGameSetup;
         
         private readonly FishSetup _fishSetup;
@@ -20,8 +25,15 @@ namespace GameProcess.MiniGame.MiniGameStates
         
         private readonly FishingActiveScreen _fishingActiveScreen;
         
+        private MiniGame _currentMiniGame;
+        
+        private Vector2 _catchZonePositionBounds;
+        private float _catchZoneWidth;
+
+        private float _tempTimer;
+        
         public ActiveFishingState(StateType stateType, EventBus eventBus, BaseInput input, MiniGameSetup miniGameSetup,
-            FishingRodAnimationHandler fishingRodAnimationHandler, FishingActiveScreen fishingActiveScreen, FishSetup fishSetup)
+            FishingRodAnimationHandler fishingRodAnimationHandler, FishingActiveScreen fishingActiveScreen, FishSetup fishSetup, FishStorage fishStorage)
         {
             StateType = stateType;
             
@@ -31,7 +43,11 @@ namespace GameProcess.MiniGame.MiniGameStates
             
             _miniGameSetup = miniGameSetup;
             
+            
+            
             _fishSetup = fishSetup;
+            
+            _fishStorage = fishStorage;
             
             _fishingRodAnimation = fishingRodAnimationHandler;
             
@@ -40,34 +56,108 @@ namespace GameProcess.MiniGame.MiniGameStates
         
         public override void Enter()
         {
-            Debug.Log("ActiveFishingState Enter");
+            _tempTimer = 0f;
+            
+            _fishingActiveScreen.ActiveScreen.DOKill();
+            
+            _fishingActiveScreen.ActiveScreen.DOFade(1, 0.5f);
             
             _fishingRodAnimation.Throw();
+            
+            SetMiniGame();
+            SetupMiniGameUi();
+            
+            _fishingActiveScreen.UpdateProgress(0);
         }
 
         public override void Update()
         {
+            _tempTimer += Time.deltaTime;
+            
+            _fishingActiveScreen.UpdateProgress(Mathf.Lerp(0f, 1f, _tempTimer / _currentMiniGame.GameDuration));
+
+            if (_tempTimer >= _currentMiniGame.GameDuration)
+            {
+                MiniGameLoose();
+            }
+
+            _fishingActiveScreen.ToggleTooltip(_fishingActiveScreen.CallCatch());
+
             if (_input.gameplay.Interact.WasPressedThisFrame())
             {
-                _eventBus.Publish(_fishSetup.AvailableFishes[0]);
+                if (!_fishingActiveScreen.CallCatch())
+                {
+                    MiniGameLoose();
+                    
+                    return;
+                }
                 
-                // _fishingRodAnimation.Catch();
+                MiniGameWin();
+                
+                _fishingRodAnimation.Catch();
             }
         }
 
         public override void Exit()
         {
+            _fishingActiveScreen.ActiveScreen.DOKill();
             
+            _fishingActiveScreen.ActiveScreen.DOFade(0, 0.5f);
         }
 
-        private void SetDifficulty()
+        private void SetMiniGame()
         {
+            float chance;
             
+            foreach (var miniGame in _miniGameSetup.MiniGames)
+            {
+                Debug.Log(miniGame.Difficulty);
+                
+                chance = Random.Range(0f, 1f);
+
+                Debug.Log(chance);
+                
+                if (chance < miniGame.MiniGameChance)
+                {
+                    _currentMiniGame = miniGame;
+                    
+                    return;
+                }
+            }
+
+            _currentMiniGame = _miniGameSetup.MiniGames
+                .FirstOrDefault(miniGame => miniGame.Difficulty == MiniGameTypeDifficulties.Easy);
         }
         
-        public void ShowMiniGameUi()
+        private void SetupMiniGameUi()
         {
+            _fishingActiveScreen.SetRandomCatchZone(_currentMiniGame.PercentageBounds);
+        }
+
+        private void MiniGameWin()
+        {
+            var possibleFishes =
+                _fishSetup.AvailableFishes.Where(fish => fish.Difficulty == _currentMiniGame.Difficulty).ToList();
             
+            var randomFishId = Random.Range(0, possibleFishes.Count);
+
+            if (possibleFishes.Count == 0)
+            {
+                Debug.Log("No such difficulty class fishes, get default fish");
+                
+                _eventBus.Publish(_fishSetup.AvailableFishes[0]);
+                _fishStorage.AddFish(_fishSetup.AvailableFishes[0]);
+                
+                return;
+            }
+            
+            _eventBus.Publish(possibleFishes[randomFishId]);
+            _fishStorage.AddFish(possibleFishes[randomFishId]);
+        }
+        
+        private void MiniGameLoose()
+        {
+            _eventBus.Publish(MiniGameStep.Toggled);
         }
     }
 }
