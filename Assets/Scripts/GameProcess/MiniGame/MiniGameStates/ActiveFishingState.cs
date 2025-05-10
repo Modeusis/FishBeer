@@ -41,6 +41,8 @@ namespace GameProcess.MiniGame.MiniGameStates
         public override void Enter()
         {
             Debug.Log("ActiveFishingState Enter");
+            
+            _fishingRodAnimation.Throw();
         }
 
         public override void Update()
@@ -48,6 +50,8 @@ namespace GameProcess.MiniGame.MiniGameStates
             if (_input.gameplay.Interact.WasPressedThisFrame())
             {
                 _eventBus.Publish(_fishSetup.AvailableFishes[0]);
+                
+                // _fishingRodAnimation.Catch();
             }
         }
 

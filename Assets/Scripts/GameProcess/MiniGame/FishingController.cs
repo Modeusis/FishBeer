@@ -20,10 +20,11 @@ namespace GameProcess.MiniGame
         
         private SoundService _soundService;
         
+        [Header("Setups")]
         [SerializeField] private FishSetup fishSetup;
-        
         [SerializeField] private MiniGameSetup miniGameSetup;
         
+        [Header("Fishing animation")]
         [SerializeField] private FishingRodAnimationHandler fishingRod;
         
         [Header("State UI screens")]

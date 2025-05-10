@@ -109,14 +109,12 @@ namespace GameProcess.MiniGame.MiniGameStates
             if (_fishViewInstance == null)
                 return;
             
-            Debug.Log("Test");
-            
             _fishViewInstance.transform.DOKill();
             
             _fishViewInstance.transform.DOLocalRotate(new Vector3(0, 360f, 45f), _fishingFinishScreen.SpinDuration,
                     RotateMode.FastBeyond360)
                 .SetEase(Ease.Linear)
-                .SetLoops(-1, LoopType.Restart);
+                .SetLoops(-1, LoopType.Restart); 
         }
     }
 }

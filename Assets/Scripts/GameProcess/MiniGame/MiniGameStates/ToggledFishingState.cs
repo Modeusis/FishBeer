@@ -43,6 +43,8 @@ namespace GameProcess.MiniGame.MiniGameStates
             _toggledFishingScreen.ScreenCanvasGroup.DOFade(1f, _toggledFishingScreen.UiTransitionDuration);
             
             _eventBus.Publish(CameraPosition.Fishing);
+            
+            _fishingRodAnimation.Toggle();
         }
 
         public override void Update()

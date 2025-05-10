@@ -17,6 +17,8 @@ namespace GameProcess.MiniGame.MiniGameStates
         public override void Enter()
         {
             Debug.Log("IdleFishingState Enter");
+            
+            _fishingRodAnimationHandler.Idle();
         }
 
         public override void Update()
