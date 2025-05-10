@@ -59,7 +59,6 @@ namespace GameProcess.MiniGame.StateUiScreens
                     ToolTip.transform.DOScale(1f, textScaleDuration);
                 }
                 
-                
                 ToolTip.text = value;
             }
         }

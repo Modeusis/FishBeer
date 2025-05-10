@@ -32,6 +32,9 @@ namespace GameProcess.MiniGame
         [Header("Fishing animation")]
         [SerializeField] private FishingRodAnimationHandler fishingRod;
         
+        [Header("Fishing Line")]
+        [SerializeField] private FishingLineHandler fishingLine;
+        
         [Header("State UI screens")]
         [SerializeField] private ToggledFishingScreen toggledFishingScreen;
         [SerializeField] private FishingActiveScreen activeFishingScreen;
@@ -73,9 +76,9 @@ namespace GameProcess.MiniGame
 
             var states = new Dictionary<StateType, State>()
             {
-                { StateType.Idle, new IdleFishingState(StateType.Idle, fishingRod) },
-                { StateType.Toggled, new ToggledFishingState(StateType.Toggled, _eventBus, _input, toggledFishingScreen, fishingRod, _resourceManager) },
-                { StateType.Active, new ActiveFishingState(StateType.Active, _eventBus, _input, miniGameSetup, fishingRod, activeFishingScreen, fishSetup, _fishStorage) },
+                { StateType.Idle, new IdleFishingState(StateType.Idle, fishingRod, fishingLine) },
+                { StateType.Toggled, new ToggledFishingState(StateType.Toggled, _eventBus, _input, toggledFishingScreen, fishingRod, fishingLine, _resourceManager) },
+                { StateType.Active, new ActiveFishingState(StateType.Active, _eventBus, _input, miniGameSetup, fishingRod, fishingLine, activeFishingScreen, fishSetup, _fishStorage) },
                 { StateType.Finished, new FinishFishingState(StateType.Finished, _eventBus, _soundService,fishingFinishScreen) },
             };
             

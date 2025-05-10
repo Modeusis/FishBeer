@@ -18,10 +18,10 @@ namespace GameProcess.MiniGame.MiniGameStates
         private readonly FishStorage _fishStorage;
         
         private readonly MiniGameSetup _miniGameSetup;
-        
         private readonly FishSetup _fishSetup;
         
         private readonly FishingRodAnimationHandler _fishingRodAnimation;
+        private readonly FishingLineHandler _fishingLine;
         
         private readonly FishingActiveScreen _fishingActiveScreen;
         
@@ -33,7 +33,8 @@ namespace GameProcess.MiniGame.MiniGameStates
         private float _tempTimer;
         
         public ActiveFishingState(StateType stateType, EventBus eventBus, BaseInput input, MiniGameSetup miniGameSetup,
-            FishingRodAnimationHandler fishingRodAnimationHandler, FishingActiveScreen fishingActiveScreen, FishSetup fishSetup, FishStorage fishStorage)
+            FishingRodAnimationHandler fishingRodAnimationHandler, FishingLineHandler fishingLineHandler,
+            FishingActiveScreen fishingActiveScreen, FishSetup fishSetup, FishStorage fishStorage)
         {
             StateType = stateType;
             
@@ -41,15 +42,15 @@ namespace GameProcess.MiniGame.MiniGameStates
             
             _input = input;
             
+            _fishStorage = fishStorage;
+            
             _miniGameSetup = miniGameSetup;
-            
-            
             
             _fishSetup = fishSetup;
             
-            _fishStorage = fishStorage;
-            
             _fishingRodAnimation = fishingRodAnimationHandler;
+            
+            _fishingLine = fishingLineHandler;
             
             _fishingActiveScreen = fishingActiveScreen;
         }
@@ -72,6 +73,8 @@ namespace GameProcess.MiniGame.MiniGameStates
 
         public override void Update()
         {
+            _fishingLine.RenderFishingLine();
+            
             _tempTimer += Time.deltaTime;
             
             _fishingActiveScreen.UpdateProgress(Mathf.Lerp(0f, 1f, _tempTimer / _currentMiniGame.GameDuration));
@@ -107,16 +110,10 @@ namespace GameProcess.MiniGame.MiniGameStates
 
         private void SetMiniGame()
         {
-            float chance;
-            
             foreach (var miniGame in _miniGameSetup.MiniGames)
             {
-                Debug.Log(miniGame.Difficulty);
-                
-                chance = Random.Range(0f, 1f);
+                var chance = Random.Range(0f, 1f);
 
-                Debug.Log(chance);
-                
                 if (chance < miniGame.MiniGameChance)
                 {
                     _currentMiniGame = miniGame;

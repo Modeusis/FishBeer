@@ -23,8 +23,11 @@ namespace GameProcess.MiniGame.MiniGameStates
         
         private readonly FishingRodAnimationHandler _fishingRodAnimation;
         
+        private readonly FishingLineHandler _fishingLine;
+        
         public ToggledFishingState(StateType stateType, EventBus eventBus, BaseInput input,
-            ToggledFishingScreen toggleFishingScreen , FishingRodAnimationHandler fishingRodAnimation, ResourceManager resourceManager)
+            ToggledFishingScreen toggleFishingScreen , FishingRodAnimationHandler fishingRodAnimation,
+            FishingLineHandler fishingLineHandler, ResourceManager resourceManager)
         {
             StateType = stateType;
             
@@ -38,6 +41,8 @@ namespace GameProcess.MiniGame.MiniGameStates
             _toggledFishingScreen.ScreenCanvasGroup.interactable = false;
             
             _fishingRodAnimation = fishingRodAnimation;
+            
+            _fishingLine = fishingLineHandler;
         }
         
         public override void Enter()
@@ -52,6 +57,8 @@ namespace GameProcess.MiniGame.MiniGameStates
 
         public override void Update()
         {
+            _fishingLine.RenderFishingLine();
+            
             if (_input.gameplay.Interact.WasPressedThisFrame() && _resourceManager.FishBaits > 0)
             {
                 _resourceManager.SpendFishBait();

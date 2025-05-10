@@ -16,15 +16,12 @@ MonoBehaviour:
   - <Difficulty>k__BackingField: 2
     <MiniGameChance>k__BackingField: 0.2
     <GameDuration>k__BackingField: 1
-    <ZoneWidth>k__BackingField: 40
-    <PercentageBounds>k__BackingField: {x: 0.3, y: 0.6}
+    <PercentageBounds>k__BackingField: {x: 0.1, y: 0.4}
   - <Difficulty>k__BackingField: 1
     <MiniGameChance>k__BackingField: 0.4
     <GameDuration>k__BackingField: 2
-    <ZoneWidth>k__BackingField: 80
     <PercentageBounds>k__BackingField: {x: 0.3, y: 0.6}
   - <Difficulty>k__BackingField: 0
     <MiniGameChance>k__BackingField: 1
     <GameDuration>k__BackingField: 4
-    <ZoneWidth>k__BackingField: 100
-    <PercentageBounds>k__BackingField: {x: 0.3, y: 0.6}
+    <PercentageBounds>k__BackingField: {x: 0.5, y: 0.9}
