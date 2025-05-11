@@ -12,17 +12,27 @@ namespace UI.Bars
         
         private float _fill;
 
-        private float Fill
+        public float Fill
         {
             get => _fill;
-            set
+            private set
             {
                 if (_fill == value)
                     return;
+
+                if (_fill < 0)
+                {
+                    _fill = 0f;
+                }
+
+                if (_fill > 100)
+                {
+                    _fill = 100f;
+                }
                 
-                _fill = value / 100f;
+                _fill = value;
                 
-                bar.DOFloat(_fill, "_Progress", 0.1f);
+                bar.DOFloat(_fill / 100f, "_Progress", 0.1f);
             }
         }
 
@@ -30,15 +40,29 @@ namespace UI.Bars
         {
             Fill = startFill;
         }
-
-        private void Update()
+        
+        public void UpdateBar(float decreaseValue)
         {
-            UpdateRule();
+            if (decreaseValue <= 0)
+                return;
+            
+            Fill -= decreaseValue * Time.deltaTime;
+        }
+
+        public void OneTimeDecrease(float amount)
+        {
+            if (amount < 0)
+                return;
+            
+            Fill -= amount;
         }
         
-        protected virtual void UpdateRule()
+        public void OneTimeIncrease(float amount)
         {
+            if (amount < 0)
+                return;
             
+            Fill += amount;
         }
     }
 }

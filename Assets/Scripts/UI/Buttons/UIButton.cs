@@ -35,7 +35,8 @@ namespace UI
             
             _soundService.Play2DSfx(SoundType.ButtonHover, 1f);
             
-            transform.DOScale(scaleFactorOnHover, duration);
+            transform.DOScale(scaleFactorOnHover, duration)
+                .SetUpdate(true);
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -43,7 +44,8 @@ namespace UI
             transform.DOKill();
             _sequence?.Kill();
             
-            transform.DOScale(1f, duration / 2);
+            transform.DOScale(1f, duration / 2)
+                .SetUpdate(true);
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -55,6 +57,8 @@ namespace UI
 
             sequence.Append(transform.DOScale(scaleFactorOnClick, 0.3f));
             sequence.Append(transform.DOScale(1f, 0.2f));
+            
+            sequence.SetUpdate(true);
             
             _soundService.Play2DSfx(SoundType.ButtonClick, 1f);
         }
