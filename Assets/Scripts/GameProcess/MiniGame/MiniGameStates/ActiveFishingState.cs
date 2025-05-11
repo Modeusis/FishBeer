@@ -3,6 +3,7 @@ using System.Resources;
 using DG.Tweening;
 using GameProcess.MiniGame.StateUiScreens;
 using Player.FishStorage;
+using UI.Bars;
 using UnityEngine;
 using Utilities.EventBus;
 using Utilities.FSM;
@@ -143,18 +144,23 @@ namespace GameProcess.MiniGame.MiniGameStates
                 Debug.Log("No such difficulty class fishes, get default fish");
                 
                 _eventBus.Publish(_fishSetup.AvailableFishes[0]);
+                _eventBus.Publish(PlayerActionType.FishCatchSuccess);
+                
                 _fishStorage.AddFish(_fishSetup.AvailableFishes[0]);
                 
                 return;
             }
             
             _eventBus.Publish(possibleFishes[randomFishId]);
+            _eventBus.Publish(PlayerActionType.FishCatchSuccess);
+            
             _fishStorage.AddFish(possibleFishes[randomFishId]);
         }
         
         private void MiniGameLoose()
         {
             _eventBus.Publish(MiniGameStep.Toggled);
+            _eventBus.Publish(PlayerActionType.FishCatchFailure);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Animations;
 using Player.Camera;
 using Player.FishStorage;
+using UI.Bars;
 using UI.Cursor;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -18,6 +19,8 @@ namespace GameProcess.Interactions
 
         public EatableFishAnimationHandler animationHandler;
 
+        private CameraUnblocker _cameraUnblocker = new CameraUnblocker();
+        
         public void Interact()
         {
             if (animationHandler == null)
@@ -60,9 +63,10 @@ namespace GameProcess.Interactions
 
         public void HandleFinishEating()
         {
-            _eventBus.Publish(new CameraUnblocker());
+            _eventBus.Publish(_cameraUnblocker);
+            _eventBus.Publish(PlayerActionType.FishEat);
             
-            Destroy(gameObject);
+            Destroy(animationHandler.gameObject);
         }
     }
 }
