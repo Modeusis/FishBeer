@@ -1,23 +1,27 @@
 using TMPro;
+using UnityEngine;
 
 namespace UI.Pages.FishSaleTable
 {
-    public class FishElementView
+    public class FishElementView : MonoBehaviour
     {
-        private TMP_Text fishNameText;
-        private TMP_Text fishRareText;
-        private TMP_Text fishQuantityText;
-        private TMP_Text totalPriceText;
+        [SerializeField] private TMP_Text fishNameText;
+        [SerializeField] private TMP_Text fishQuantityText;
+        [SerializeField] private TMP_Text totalPriceText;
 
-        public void UpdateView(string fishName, string fishQuantity, string fishRare, string fishPrice)
+        public void SetFishNameText(string text)
         {
-            fishNameText.text = fishName;
-            
-            fishRareText.text = fishRare;
-            
-            fishQuantityText.text = fishQuantity;
-            
-            totalPriceText.text = fishPrice;
-        } 
+            fishNameText.text = text;
+        }
+
+        public void SetFishQuantityText(string text)
+        {
+            fishQuantityText.text = text;
+        }
+
+        public void SetTotalPriceText(string text)
+        {
+            totalPriceText.text = text;
+        }
     }
 }

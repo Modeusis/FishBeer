@@ -20,17 +20,18 @@ namespace UI.Bars
                 if (_fill == value)
                     return;
 
-                if (_fill < 0)
+                if (value <= 0)
                 {
                     _fill = 0f;
                 }
-
-                if (_fill > 100)
+                else if (value > 100)
                 {
                     _fill = 100f;
                 }
-                
-                _fill = value;
+                else
+                {
+                    _fill = value;
+                }
                 
                 bar.DOFloat(_fill / 100f, "_Progress", 0.1f);
             }

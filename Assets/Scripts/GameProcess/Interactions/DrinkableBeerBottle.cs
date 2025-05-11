@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Animations;
 using Player;
 using Player.Camera;
+using UI.Bars;
 using UI.Cursor;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -93,6 +94,7 @@ namespace GameProcess.Interactions
             _isDrinking = false;
             
             _eventBus.Publish(_cameraUnblocker);
+            _eventBus.Publish(PlayerActionType.BeerDrink);
             
             Destroy(animationHandle.gameObject);
         }

@@ -7,10 +7,10 @@ namespace Player.FishStorage
 {
     public class FishStorage : IDisposable
     {
-        [Inject] private ResourceManager _resourceManager;
-        
         private List<Fish> _fishes;
 
+        public IReadOnlyList<Fish> Fishes => _fishes;
+        
         private FishCountView _fishCountView;
         
         public FishStorage(FishCountView view)
@@ -31,15 +31,15 @@ namespace Player.FishStorage
 
         public void EatFish()
         {
-            // _fishes.Remove(_fishes[0]);
+            _fishes.Remove(_fishes[0]);
             
             _fishCountView.UpdateFishAmount(GetFishesAmount());
         }
         
-        public void SellFishes()
+        public float SellFishes()
         {
             if (GetFishesAmount() == 0)
-                return;
+                return 0f;
             
             float total = 0f;
             
@@ -48,7 +48,9 @@ namespace Player.FishStorage
                 total += fish.Price;
             }
             
-            _resourceManager.AddMoney(total);
+            _fishes.Clear();
+            
+            return total;
         }
 
         public void Dispose()

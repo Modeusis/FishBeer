@@ -52,8 +52,6 @@ namespace UI.Bars
                     return;
                 
                 _currentHpBarDecreaseValue = value;
-                
-                Debug.Log($"hp decrease speed changed {_currentHpBarDecreaseValue}");
             }
         }
         
@@ -68,8 +66,6 @@ namespace UI.Bars
                     return;
                 
                 _currentMoodBarDecreaseValue = value;
-                
-                Debug.Log($"mood decrease speed changed {_currentMoodBarDecreaseValue}");
             }
         }
         
@@ -150,7 +146,7 @@ namespace UI.Bars
         
         private void OnFishLose()
         {
-            moodBar.OneTimeIncrease(onFishLoseDecreaseValue);
+            moodBar.OneTimeDecrease(onFishLoseDecreaseValue);
         }
         
         private void OnFishEat()

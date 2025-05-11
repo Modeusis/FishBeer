@@ -26,10 +26,15 @@ namespace UI
         private void Initialize(SoundService soundService)
         {
             _soundService = soundService;
+            
+            _button = GetComponent<Button>();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (!_button.interactable)
+                return;
+            
             transform.DOKill();
             _sequence?.Kill();
             
@@ -41,6 +46,9 @@ namespace UI
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (!_button.interactable)
+                return;
+            
             transform.DOKill();
             _sequence?.Kill();
             
@@ -50,6 +58,9 @@ namespace UI
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (!_button.interactable)
+                return;
+            
             transform.DOKill();
             _sequence?.Kill();
             
