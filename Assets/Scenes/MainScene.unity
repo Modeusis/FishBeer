@@ -2567,7 +2567,7 @@ TerrainCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 2
   m_TerrainData: {fileID: 15600000, guid: 34d00d80b68d4fa48a7715a81476e089, type: 2}
@@ -3640,6 +3640,53 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!1 &414177881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 414177882}
+  - component: {fileID: 414177885}
+  m_Layer: 0
+  m_Name: Floater
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &414177882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414177881}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0.027}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2064327063168426039}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &414177885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414177881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926b6b7512c140729589a95b040183f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handTransform: {fileID: 1263500838}
+  waterDestinationTransform: {fileID: 1688872812}
+  floaterTransitionTime: 1
 --- !u!1 &432811451
 GameObject:
   m_ObjectHideFlags: 0
@@ -7256,6 +7303,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1263500837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1263500838}
+  m_Layer: 0
+  m_Name: FloaterIdlePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1263500838
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263500837}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.01029, z: 0.01808}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2064327063168426039}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1264825287
 GameObject:
   m_ObjectHideFlags: 0
@@ -7632,22 +7710,27 @@ MonoBehaviour:
     coilHandle: {fileID: 3315420055065022919}
     idleTransitionDuration: 0.5
     toggleTransitionDuration: 0.5
-    throwTransitionDuration: 0.3
-    catchTransitionDuration: 0.5
+    throwTransitionDuration: 0.5
+    catchTransitionDuration: 0.3
     startPosition: {x: 2.087, y: -1.44, z: 0.5}
     startRotation: {x: -90, y: 180, z: 0}
     togglePosition: {x: 1.55, y: -1.44, z: 0.39}
     toggleRotation: {x: 337, y: 350, z: 180}
     throwPosition: {x: 1.55, y: -1.44, z: 2.242}
     throwRotation: {x: 285, y: 170, z: 0}
+    catchPosition: {x: 1.88, y: -1.739, z: 2.08}
+    catchRotation: {x: 321, y: 14, z: 127}
+    fishingLineFloater: {fileID: 414177885}
   fishingLine:
     fishingLineOrigin: {fileID: 1302639216}
     fishingLineWidth: 0.01
+    fishingLineEndWidth: 0.005
     fishingLineDestinations:
     - {fileID: 2126619411}
     - {fileID: 2136667560}
     - {fileID: 978666797}
     - {fileID: 1302639215}
+    - {fileID: 414177882}
   toggledFishingScreen:
     <UiTransitionDuration>k__BackingField: 0.5
     <ScreenCanvasGroup>k__BackingField: {fileID: 819679727}
@@ -10863,6 +10946,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1669398815}
   m_CullTransparentMesh: 1
+--- !u!1 &1688872811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1688872812}
+  m_Layer: 0
+  m_Name: WaterDestinationPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1688872812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688872811}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.2592, y: 0, z: 0.0354}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3352276712812317275}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1695694856
 GameObject:
   m_ObjectHideFlags: 0
@@ -14428,7 +14542,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1263500838}
   - {fileID: 1302639215}
+  - {fileID: 414177882}
   m_Father: {fileID: 8636467353194413248}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!222 &2229166317527508087
@@ -14764,7 +14880,8 @@ Transform:
   m_LocalPosition: {x: 6.4605203, y: 8.614758, z: 71.47147}
   m_LocalScale: {x: 40, y: 1, z: 40}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1688872812}
   m_Father: {fileID: 1824149380}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &3396891548551530890
@@ -16290,7 +16407,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8976014769183614586}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
+  m_LocalRotation: {x: 0.00000003090862, y: 0.70710677, z: 0.70710677, w: -0.00000003090862}
   m_LocalPosition: {x: 2.087, y: -1.44, z: 0.5}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
@@ -16300,7 +16417,7 @@ Transform:
   - {fileID: 1716776558640521044}
   - {fileID: 2064327063168426039}
   m_Father: {fileID: 330585546}
-  m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: -141.893, y: 193.954, z: -52.64801}
 --- !u!23 &8792653733664604502
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -11,26 +11,18 @@ namespace GameProcess.MiniGame
         [SerializeField] private LineRenderer fishingLineOrigin;
         
         [SerializeField, Range(0.01f, 0.05f)] private float fishingLineWidth = 0.02f;
+        [SerializeField, Range(0.005f, 0.05f)] private float fishingLineEndWidth = 0.005f;
         
         [Header("Fishing Line Positions")]
         [SerializeField] private List<Transform> fishingLineDestinations = new List<Transform>();
         
+
         public void RenderFishingLine()
         {
-            if (fishingLineOrigin == null)
-            {
-                Debug.LogError("FishingLineOrigin is not assigned!");
-                return;
-            }
-
-            if (fishingLineDestinations == null || fishingLineDestinations.Count == 0)
-            {
-                Debug.LogError("No fishing line destinations assigned!");
-                return;
-            }
-
             fishingLineOrigin.enabled = true;
+            
             fishingLineOrigin.startWidth = fishingLineWidth;
+            fishingLineOrigin.endWidth = fishingLineEndWidth;
             
             fishingLineOrigin.positionCount = fishingLineDestinations.Count;
             
@@ -42,10 +34,7 @@ namespace GameProcess.MiniGame
 
         public void HideFishingLine()
         {
-            // if (fishingLineOrigin != null)
-            // {
-            //     fishingLineOrigin.enabled = false;
-            // }
+            fishingLineOrigin.enabled = false;
         }
     }
 }
