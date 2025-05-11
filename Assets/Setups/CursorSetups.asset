@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8894d566d14748abbc5c37a9334ba155, type: 3}
+  m_Name: CursorSetups
+  m_EditorClassIdentifier: 
+  <Cursors>k__BackingField:
+  - <CursorType>k__BackingField: 0
+    <CursorImage>k__BackingField: {fileID: -1314100345, guid: 7d81d2bec6a16f24e834569ef2adeafb, type: 3}
+  - <CursorType>k__BackingField: 1
+    <CursorImage>k__BackingField: {fileID: 1931128614, guid: 7d81d2bec6a16f24e834569ef2adeafb, type: 3}
+  - <CursorType>k__BackingField: 2
+    <CursorImage>k__BackingField: {fileID: -757177955, guid: 7d81d2bec6a16f24e834569ef2adeafb, type: 3}
