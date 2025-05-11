@@ -766,15 +766,6 @@
 
 {
     "m_SGVersion": 0,
-    "m_Type": "UnityEditor.Rendering.Canvas.ShaderGraph.CanvasData",
-    "m_ObjectId": "0948da300bf249abb6ffab8c660743bd",
-    "m_Version": 0,
-    "m_AlphaClip": false,
-    "m_DisableTint": false
-}
-
-{
-    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
     "m_ObjectId": "094998482ddf44c3b315eb86d18588a6",
     "m_Id": -812971565,
@@ -2311,8 +2302,8 @@
     "m_ObjectId": "39b281c812184b0eab10f67880d4add0",
     "m_Title": "UV",
     "m_Position": {
-        "x": -826.66650390625,
-        "y": 738.666748046875
+        "x": -825.9999389648438,
+        "y": 738.9999389648438
     }
 }
 
@@ -4876,8 +4867,8 @@
     "m_ObjectId": "753f0cd3caa64999b97dc4c60ff9a688",
     "m_Title": "Gradients",
     "m_Position": {
-        "x": 751.33349609375,
-        "y": -1419.333251953125
+        "x": 752.0,
+        "y": -1420.0
     }
 }
 
@@ -5458,8 +5449,8 @@
     "m_ObjectId": "80b607e1faa9476bb3f01883eeaa47e3",
     "m_Title": "Patterns",
     "m_Position": {
-        "x": -1312.0,
-        "y": -426.66650390625
+        "x": -1310.999755859375,
+        "y": -427.0
     }
 }
 
@@ -6016,8 +6007,8 @@
     "m_ObjectId": "8b79e331ded94e18828e9fcd8b5cac77",
     "m_Title": "Time",
     "m_Position": {
-        "x": -1823.333251953125,
-        "y": 744.000244140625
+        "x": -1821.9998779296875,
+        "y": 743.9998779296875
     }
 }
 
@@ -6379,8 +6370,8 @@
     "m_ObjectId": "938f4ef64f154267a66b4b07d1981041",
     "m_Title": "SDFs",
     "m_Position": {
-        "x": -655.333251953125,
-        "y": 154.000244140625
+        "x": -655.0,
+        "y": 153.9998779296875
     }
 }
 
@@ -7714,8 +7705,8 @@
     "m_ObjectId": "b7ff4e38a3df4ac1b0edd9d0e5aa769a",
     "m_Title": "Helpers",
     "m_Position": {
-        "x": -1156.6666259765625,
-        "y": -899.999755859375
+        "x": -1156.0,
+        "y": -900.0
     }
 }
 

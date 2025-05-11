@@ -10,12 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd9b2e17badf42f991f40faf6facdc3e, type: 3}
-  m_Name: New Mini Game Setup
+  m_Name: MiniGameSetup
   m_EditorClassIdentifier: 
   miniGames:
-  - <MiniGameTypeDifficulties>k__BackingField: 0
+  - <Difficulty>k__BackingField: 2
     <MiniGameChance>k__BackingField: 0.2
-  - <MiniGameTypeDifficulties>k__BackingField: 0
+    <GameDuration>k__BackingField: 1
+    <PercentageBounds>k__BackingField: {x: 0.1, y: 0.4}
+  - <Difficulty>k__BackingField: 1
     <MiniGameChance>k__BackingField: 0.4
-  - <MiniGameTypeDifficulties>k__BackingField: 0
+    <GameDuration>k__BackingField: 2
+    <PercentageBounds>k__BackingField: {x: 0.3, y: 0.6}
+  - <Difficulty>k__BackingField: 0
     <MiniGameChance>k__BackingField: 1
+    <GameDuration>k__BackingField: 4
+    <PercentageBounds>k__BackingField: {x: 0.5, y: 0.9}

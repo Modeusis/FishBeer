@@ -22,8 +22,6 @@ namespace UI
         
         private Sequence _sequence;
         
-        public UnityEvent onClick;
-        
         [Inject]
         private void Initialize(SoundService soundService)
         {
@@ -59,8 +57,6 @@ namespace UI
             sequence.Append(transform.DOScale(1f, 0.2f));
             
             _soundService.Play2DSfx(SoundType.ButtonClick, 1f);
-            
-            onClick?.Invoke();
         }
     }
 }

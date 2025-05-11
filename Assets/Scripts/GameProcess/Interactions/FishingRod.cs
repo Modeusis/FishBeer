@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
-using DG.Tweening;
+﻿using DG.Tweening;
 using GameProcess.MiniGame;
-using Player;
 using Player.FishStorage;
+using Sounds;
 using UnityEngine;
+using Utilities.EventBus;
 using Zenject;
 
 namespace GameProcess.Interactions
 {
     public class FishingRod : MonoBehaviour, IInteractable
     {
-        [Inject] private ResourceManager _resourceManager;
-
+        [Inject] private EventBus _eventBus;
+        [Inject] private SoundService _soundService;
+        
         [SerializeField] private MiniGameSetup miniGames;
         [SerializeField] private FishSetup fishSetup;
         
@@ -20,8 +21,6 @@ namespace GameProcess.Interactions
         [SerializeField] private Transform secondFishingRodElement;
         
         [SerializeField] private float focusDuration = 0.5f;
-        
-        private List<Transform> _rodChilds;
 
         private Sequence _sequence;
         private Sequence _subSequence;
@@ -39,63 +38,37 @@ namespace GameProcess.Interactions
             
             _startFirstPartPosition = firstFishingRodElement.localPosition;
             _startSecondPartPosition = secondFishingRodElement.localPosition;
-            
-            _rodChilds = new List<Transform>();
-
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                _rodChilds.Add(transform.GetChild(i));
-            }
         }
         
         public void Interact()
         {
-            if (!ValidateMiniGameStart())
-                return;
+            _eventBus.Publish(InteractionType.Fishing);
             
-            ToggleChildFocus(false);
+            UnfocusAnimation();
         }
 
         public void Focus()
         {
             FocusAnimation();
             
-            ToggleChildFocus(true);
+            _soundService.Play3DSfx(SoundType.FishRodFocus, transform, 6f, 1f);
         }
 
         public void Unfocus()
         {
             UnfocusAnimation();
-            
-            ToggleChildFocus(false);
-        }
-        
-        private void ToggleChildFocus(bool focus)
-        {
-            foreach (var child in _rodChilds)
-            {
-                child.gameObject.layer = focus ? LayerMask.NameToLayer("Interactable") : LayerMask.NameToLayer("Default");
-            }
-        }
-
-        private bool ValidateMiniGameStart()
-        {
-            if (_resourceManager.FishBaits == 0)
-                return false;
-            
-            return true;
         }
 
         private void FocusAnimation()
         {
-            Debug.Log("focus rod");
-            
             fishRodTransform?.DOKill();
             _sequence?.Kill();
             _subSequence?.Kill();
             
             _sequence = DOTween.Sequence();
             _subSequence = DOTween.Sequence();
+            
+            _soundService.Play3DSfx(SoundType.FishRodUnpack, transform, 6f, 1f);
             
             _sequence.Append(fishRodTransform.DOLocalMove(new Vector3(11.743f, 9.72799969f, 8.55599976f), focusDuration / 2));
             _sequence.Append(fishRodTransform.DOLocalMove(new Vector3(11.7919998f, 9.96899986f, 8.21500015f),
@@ -122,12 +95,12 @@ namespace GameProcess.Interactions
 
         private void UnfocusAnimation()
         {
-            Debug.Log("Unfocus rod");
-            
             fishRodTransform?.DOKill();
             _sequence?.Kill();
             _subSequence?.Kill();
 
+            _soundService.Play3DSfx(SoundType.FishRodPack, transform, 6f, 1f);
+            
             fishRodTransform.DOLocalMove(_startPosition, focusDuration);
             fishRodTransform.DOLocalRotate(_startRotation, focusDuration);
 

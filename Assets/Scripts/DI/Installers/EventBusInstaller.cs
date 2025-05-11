@@ -1,4 +1,5 @@
-﻿using Utilities.EventBus;
+﻿using UnityEngine;
+using Utilities.EventBus;
 using Zenject;
 
 namespace DI.Installers

@@ -16,8 +16,11 @@ namespace GameProcess.MiniGame
     [Serializable]
     public class MiniGame
     {
-        [field: SerializeField] public MiniGameTypeDifficulties MiniGameTypeDifficulties { get; private set; }
+        [field: SerializeField] public MiniGameTypeDifficulties Difficulty { get; private set; }
         
         [field: SerializeField, Range(0, 1f)] public float MiniGameChance { get; private set; }
+
+        [field: SerializeField] public float GameDuration { get; private set; } = 4f;
+        [field: SerializeField] public Vector2 PercentageBounds { get; private set; } = new Vector2(0.3f, 0.6f);
     }
 }
