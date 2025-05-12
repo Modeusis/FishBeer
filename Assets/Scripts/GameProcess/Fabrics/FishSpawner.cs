@@ -24,8 +24,17 @@ namespace GameProcess.Fabrics
 
         private void Update()
         {
+            if (_fishInstance != null && _fishStorage.GetFishesAmount() == 0)
+            {
+                Destroy(_fishInstance.gameObject);
+                    
+                _fishInstance = null;
+            }
+            
             if (!ValidateSpawnFish())
+            {
                 return;
+            }
 
             SpawnFish();
         }

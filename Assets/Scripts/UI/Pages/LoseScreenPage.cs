@@ -23,6 +23,7 @@ namespace UI.Pages
             
             _canvasGroup.alpha = 0;
             _canvasGroup.interactable = false;
+            _canvasGroup.blocksRaycasts = false;
             
             exitButton.onClick.AddListener(Exit);
         }
@@ -35,6 +36,7 @@ namespace UI.Pages
                 .SetUpdate(true);
             
             _canvasGroup.interactable = true;
+            _canvasGroup.blocksRaycasts = true;
         }
 
         private void Exit()

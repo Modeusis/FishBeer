@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UI.ResourceCounters;
+using UnityEngine;
 using Zenject;
 
 namespace Player.FishStorage
@@ -31,6 +32,13 @@ namespace Player.FishStorage
 
         public void EatFish()
         {
+            if (_fishes.Count == 0)
+            {
+                Debug.LogWarning("No fishes left");
+                
+                return;
+            }
+            
             _fishes.Remove(_fishes[0]);
             
             _fishCountView.UpdateFishAmount(GetFishesAmount());

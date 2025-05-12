@@ -28,8 +28,6 @@ namespace GameProcess.Interactions
             
             _eventBus.Publish(InteractionType.Eating);
             
-            _fishStorage.EatFish();
-            
             _eventBus.Publish(CursorType.Idle);
             
             animationHandler.gameObject.layer = LayerMask.NameToLayer("Default");
@@ -67,6 +65,8 @@ namespace GameProcess.Interactions
             _eventBus.Publish(PlayerActionType.FishEat);
             
             Destroy(animationHandler.gameObject);
+                        
+            _fishStorage.EatFish();
         }
     }
 }
